@@ -20,12 +20,12 @@ import static crawling.output.OutputFormat.TXT;
 public class Main {
     public static void main(String[] args) throws IOException {
         long start = System.currentTimeMillis();
-
-        String url = "http://www.navitime.co.jp/";
-//        String url = "http://texchg.com/archives/category/textbook";
+        InputURL input = new InputURL();
+        String url = input.inputURL();
         URL rootUrl = new URL(url);
-        final String host = rootUrl.getHost();
+        String host = rootUrl.getHost();
         URLFormatter urlformat = new URLFormatter();
+
         // nodelist 作成
         NodeList nodeList = NodeList.generateNodeList(rootUrl.getHost());
         Node rootNode = nodeList.getHost();
@@ -43,7 +43,6 @@ public class Main {
         System.out.println("---------------------------");
         System.out.println("Time: " + (end - start) + "ms");
         System.out.println("---------------------------");
-
     }
 
     public static void crawlUrl(String url, String host, List<StringBuffer> htmlList){

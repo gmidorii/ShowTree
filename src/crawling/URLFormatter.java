@@ -33,37 +33,15 @@ public class URLFormatter {
         }
     }
 
-
-    public List<String> removeExtraPart(List<String> urlList, String host){
-        List<String> newUrlList = new ArrayList<>();
-        for (String url : urlList) {
-            String url1 = removeParameter(url);
-            String url2 = removeHead(url1, host);
-            newUrlList.add(url2);
-        }
-
-        return newUrlList;
-    }
-
-    public String removeParameter(String url){
-        String newUrl = url;
-        // Listが0,スタートであるため -1
+    public void removeChildren(StringBuilder url){
         int index = -1;
-        if( (index = url.indexOf("?")) != -1){
-            newUrl = url.substring(0, index);
+        int SLASHCOUNT = 3;
+        int count = 0;
+        while(count < SLASHCOUNT){
+            index = url.indexOf("/", index + 1);
+            count++;
         }
-        return newUrl;
-    }
-
-    public String removeHead(String url, String removeString){
-        String newUrl = url;
-        // Listが0,スタートであるため -1
-        int index = -1;
-        if( (index = url.indexOf(removeString)) != -1){
-            newUrl = url.substring(index + removeString.length() + 1); // 文字列の長さを考慮
-        }
-
-        return newUrl;
+        url.delete(index + 1, url.length());
     }
 
 }
