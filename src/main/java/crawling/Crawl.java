@@ -128,16 +128,7 @@ public class Crawl {
 
     public void getUrlSet(int hierarchy, Set<String> urlSet, List<Set<String>> urlSetList){
         Set<String> newUrlSet = new HashSet<>();
-        for (String url : urlSet) {
-            //相対パスの時
-            if(url.indexOf(host) == -1){
-                url = hostUrl + url;
-            }else if(url.indexOf(protocol) == -1){
-                url = protocol + ":"+ url;
-            }
-
-            addUrlSetList(url, newUrlSet, urlSetList);
-        }
+        urlSet.parallelStream().forEach(url -> addUrlSetList(url, newUrlSet, urlSetList));
         if(hierarchy > 0){
             hierarchy--;
             getUrlSet(hierarchy, newUrlSet, urlSetList);
@@ -147,7 +138,7 @@ public class Crawl {
     public void addUrlSet(String url, Set<String> urlSet){
         String urlStr = "";
         try{
-            Document doc = Jsoup.connect(url).get();
+            Document doc = Jsoup.connect(url.trim()).get();
             Elements links = doc.getElementsByTag("a");
             for (Element link : links){
                 urlStr = link.attr("href");
@@ -160,7 +151,14 @@ public class Crawl {
     }
     
     public void addUrlSetList(String url, Set<String> urlSet, List<Set<String>> urlSetList){
-        addUrlSet(url.toString(), urlSet);
+        //相対パスの時
+        if(url.indexOf(host) == -1){
+            url = hostUrl + url;
+        }else if(url.indexOf(protocol) == -1){
+            url = protocol + ":"+ url;
+        }
+
+        addUrlSet(url, urlSet);
         urlSetList.add(urlSet);
     }
 }
