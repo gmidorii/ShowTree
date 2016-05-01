@@ -10,57 +10,80 @@ import java.util.Set;
  */
 public class MakeUrlSet {
     private String host;
-    private int LASTHIERARCHY = 1;
+    private String protocol;
+    private StringBuffer hostUrl = new StringBuffer();
+    private int LASTHIERARCHY = 0;
 
-    public MakeUrlSet(String host) {
+    public MakeUrlSet(String host, String protocol) {
         this.host = host;
+        this.protocol = protocol;
+        this.hostUrl.append(protocol);
+        this.hostUrl.append("://");
+        this.hostUrl.append(host);
     }
 
     public Set<String> getUrlSet(String url, int hierarchy){
-        Set<String> nodeUrlSet = new HashSet<>();
-        Crawl crawl = new Crawl(url, host);
-        URLFormatter urlformat = new URLFormatter();
-        StringBuffer sburl = new StringBuffer("");
-        Set<String> urlSet = crawl.generateUrlSet(crawl.HtmlToString());
-        for (String sturl : urlSet) {
-            sburl.setLength(0);
-            sburl.append(sturl);
-            urlformat.removeUnnecessaryPart(sburl, host);
-            if(sburl.length() != 0){
-                nodeUrlSet.add(sburl.toString());
-            }
-        }
-        System.out.println(nodeUrlSet.size());
-        if(hierarchy > LASTHIERARCHY){
-            hierarchy--;
-            getUrlSet(url, hierarchy, urlSet, nodeUrlSet);
-        }
-
-        return nodeUrlSet;
-    }
-
-    public void getUrlSet(String url, int hierarchy, Set<String> urlSet, Set<String> nodeUrlSet){
-        List<StringBuffer> htmlList = new ArrayList<>();
-        urlSet.parallelStream().forEach(setUrl -> crawlUrl(setUrl, htmlList));
-        Set<String> newUrlSet = new HashSet<>();
+        Set<String> resultUrlSet = new HashSet<>();
         Crawl crawl = new Crawl(url, host);
         URLFormatter urlFormat = new URLFormatter();
-        for(StringBuffer html: htmlList){
-            newUrlSet = crawl.generateUrlSet(html);
-            addUrlSet(newUrlSet, nodeUrlSet, urlFormat);
+        StringBuffer sbUrl = new StringBuffer("");
+
+        // Crawling
+        Set<String> urlSet = crawl.generateUrlSet(crawl.HtmlToString());
+
+        // url cleaning
+        for (String stUrl : urlSet) {
+            sbUrl.setLength(0);
+            sbUrl.append(stUrl);
+            urlFormat.removeUnnecessaryPart(sbUrl, host);
+            if(sbUrl.length() != 0){
+                resultUrlSet.add(sbUrl.toString());
+            }
         }
 
-        System.out.println(nodeUrlSet.size());
+        System.out.println(resultUrlSet.size());
+
+        // 下の階層へ潜る
         if(hierarchy > LASTHIERARCHY){
             hierarchy--;
-            getUrlSet(url, hierarchy, newUrlSet, nodeUrlSet);
+            getUrlSet(url, hierarchy, urlSet, resultUrlSet);
         }
 
-        return;
+        return resultUrlSet;
+    }
+
+    public void getUrlSet(String url, int hierarchy, Set<String> urlSet, Set<String> resultUrlSet){
+        List<StringBuffer> htmlList = new ArrayList<>();
+
+        // urlのhtmlをパースし、htmllistに入れる
+        urlSet.parallelStream().forEach(setUrl -> crawlUrl(setUrl, htmlList));
+
+        // htmlをスクレイピングしurlSetを作りresultUrlSetに入れる
+        Set<String> newUrlSet = new HashSet<>();
+        Crawl crawl = new Crawl(url, host);
+        for(StringBuffer html: htmlList){
+            newUrlSet = crawl.generateUrlSet(html);
+            addUrlSet(newUrlSet, resultUrlSet);
+        }
+
+        System.out.println(resultUrlSet.size());
+        if(hierarchy > LASTHIERARCHY){
+            hierarchy--;
+            getUrlSet(url, hierarchy, newUrlSet, resultUrlSet);
+        }
     }
 
     public void crawlUrl(String url, List<StringBuffer> htmlList){
-        Crawl crawl = new Crawl(url, host);
+        Crawl crawl = null;
+        //相対パスの際
+        if(url.indexOf(host) != 0){
+            StringBuffer newUrl = new StringBuffer(url);
+            newUrl.insert(0, hostUrl);
+            crawl = new Crawl(newUrl.toString(), host);
+        }else{
+            crawl = new Crawl(url, host);
+        }
+
         StringBuffer sb = crawl.HtmlToString();
         htmlList.add(sb);
     }
@@ -71,7 +94,8 @@ public class MakeUrlSet {
         return sbUrl.toString();
     }
 
-    public void addUrlSet(Set<String> urlSet, Set<String> nodeUrlSet, URLFormatter urlFormat){
+    public void addUrlSet(Set<String> urlSet, Set<String> nodeUrlSet){
+        URLFormatter urlFormat = new URLFormatter();
         for (String url : urlSet) {
             String addUrl = cleanUrl(url, urlFormat);
             if(addUrl.length() != 0){

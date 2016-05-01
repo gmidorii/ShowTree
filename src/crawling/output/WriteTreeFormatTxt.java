@@ -54,13 +54,13 @@ public class WriteTreeFormatTxt implements WriteTreeFormat {
                 bw.write(bar + childNode.getNodeName() + LINEFEEDCODE);
                 count++;
                 recurChildNodeWriteFile(childNode, count, bw);
-
-                if(nodeCount > NODEMAXNUM){
-                    bw.write(bar + "." + LINEFEEDCODE);
-                    bw.write(bar + "." + LINEFEEDCODE);
-                    bw.write(bar + "." + LINEFEEDCODE);
-                    break;
-                }
+//
+//                if(nodeCount > NODEMAXNUM){
+//                    bw.write(bar + "." + LINEFEEDCODE);
+//                    bw.write(bar + "." + LINEFEEDCODE);
+//                    bw.write(bar + "." + LINEFEEDCODE);
+//                    break;
+//                }
                 nodeCount++;
 
                 // initialize
