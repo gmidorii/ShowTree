@@ -1,4 +1,4 @@
-package crawling;
+package crawling.URL;
 
 import java.io.BufferedReader;
 import java.io.IOException;

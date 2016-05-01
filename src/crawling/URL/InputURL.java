@@ -1,4 +1,4 @@
-package crawling;
+package crawling.URL;
 
 import javax.net.ssl.HttpsURLConnection;
 import java.io.BufferedReader;
@@ -7,7 +7,6 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLConnection;
 
 /**
  * Created by midori on 2016/04/29.

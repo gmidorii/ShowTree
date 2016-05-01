@@ -1,6 +1,6 @@
 package crawling.output;
 
-import crawling.Node;
+import crawling.Node.Node;
 
 import java.util.List;
 

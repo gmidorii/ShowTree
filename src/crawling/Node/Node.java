@@ -1,8 +1,6 @@
-package crawling;
+package crawling.Node;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /**
