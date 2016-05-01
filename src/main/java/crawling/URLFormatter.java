@@ -1,6 +1,7 @@
 package crawling;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -8,9 +9,11 @@ import java.util.List;
  */
 public class URLFormatter {
 
-    public void removeUnnecessaryPart(StringBuffer url, String host){
+    public String removeUnnecessaryPart(StringBuffer url, String host){
         removeParameter(url);
         removeHead(url, host + "/");
+
+        return url.toString();
     }
 
     public void removeParameter(StringBuffer url){

@@ -29,9 +29,9 @@ public class NodeFormatter {
         }
     }
 
-    public List<Node> createNodeList(String[] url){
+    public List<Node> createNodeList(String[] nodeArray){
         List<Node> nodeList = new ArrayList<>();
-        for(String nodeName: url){
+        for(String nodeName: nodeArray){
             if (nodeName.length() != 0){
                 nodeList.add(new Node(nodeName));
             }

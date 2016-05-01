@@ -56,14 +56,14 @@ public class InputURL {
     }
 
 
-    public boolean isExistURL(String urlstr){
+    public boolean isExistURL(String urlStr){
         HttpURLConnection conn = null;
         int status = 0;
         try{
-            URL url = new URL(urlstr);
-            if(urlstr.indexOf("http:") == 0){
+            URL url = new URL(urlStr);
+            if(urlStr.indexOf("http:") == 0){
                 conn = (HttpURLConnection) url.openConnection();
-            }else if(urlstr.indexOf("https:") == 0){
+            }else if(urlStr.indexOf("https:") == 0){
                 conn = (HttpsURLConnection) url.openConnection();
             }else{
                 return false;

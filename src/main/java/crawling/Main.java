@@ -21,11 +21,18 @@ public class Main {
     public static void main(String[] args) throws IOException {
         long start = System.currentTimeMillis();
         InputURL input = new InputURL();
-        String url = input.inputURL();
+        String url = "http://www.navitime.co.jp/";//input.inputURL();
+        //String url = "https://ja.wikipedia.org/";//input.inputURL();
         URL rootUrl = new URL(url);
         String host = rootUrl.getHost();
+        String protocol = rootUrl.getProtocol();
         URLFormatter urlformat = new URLFormatter();
+        Crawl c = new Crawl(url, host, protocol);
+        Set<String> urlSet = c.getUrlSet(url, 1);
+        urlSet.forEach(urls -> System.out.println(urls));
+        System.out.println(urlSet.size());
 
+        /**
         // nodelist 作成
         NodeList nodeList = NodeList.generateNodeList(rootUrl.getHost());
         Node rootNode = nodeList.getHost();
@@ -37,19 +44,21 @@ public class Main {
 
         WriteTree.writeTree(nodeList.getNodeList(), CONSOLE, "");
         WriteTree.writeTree(nodeList.getNodeList(), TXT, "data/tree.txt");
-
+        */
 
         long end = System.currentTimeMillis();
         System.out.println("---------------------------");
         System.out.println("Time: " + (end - start) + "ms");
         System.out.println("---------------------------");
+
+
     }
 
-    public static void crawlUrl(String url, String host, List<StringBuffer> htmlList){
-        Crawl crawl = new Crawl(url, host);
-        StringBuffer sb = crawl.HtmlToString();
-        htmlList.add(sb);
-    }
+//    public static void crawlUrl(String url, String host, List<StringBuffer> htmlList){
+//        Crawl crawl = new Crawl(url, host);
+//        StringBuffer sb = crawl.HtmlToString();
+//        htmlList.add(sb);
+//    }
 
 
     public static void printlist(Set<String> list){
