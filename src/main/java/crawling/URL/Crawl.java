@@ -105,11 +105,13 @@ public class Crawl {
     }
 
 
+    // Jsoup 利用
     public Set<String> getUrlSet(String url, int hierarchy){
         Set<String> urlSet = new HashSet<>();
         List<Set<String>> urlSetList = new ArrayList<>();
         addUrlSet(url, urlSet);
         URLFormatter format = new URLFormatter();
+        urlSetList.add(urlSet);
         if(hierarchy > 0){
             hierarchy--;
             getUrlSet(hierarchy, urlSet, urlSetList);
@@ -141,7 +143,7 @@ public class Crawl {
             for (Element link : links){
                 urlStr = link.attr("href");
                 // host or 相対パス
-                if(urlStr.indexOf(host) != -1 || (urlStr.indexOf("/") == 0 && urlStr.indexOf("/", 1) != 1) ){
+                if(urlStr.indexOf(host) == (protocol.length() + 3) || (urlStr.indexOf("/") == 0 && urlStr.indexOf("/", 1) != 1) ){
                     urlSet.add(urlStr);
                 }
             }

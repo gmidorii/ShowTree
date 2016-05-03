@@ -32,7 +32,7 @@ public class Main {
         Crawl crawl = new Crawl(url, host, protocol);
 
         //Jsoup利用
-//        Set<String> urlSet = crawl.getUrlSet(url, 2);
+        Set<String> urlSet = crawl.getUrlSet(url, 0);
 
         // nodelist 作成
         NodeList nodeList = NodeList.generateNodeList(rootUrl.getHost());
@@ -40,10 +40,10 @@ public class Main {
         NodeFormatter format = new NodeFormatter(rootNode);
         MakeUrlSet make = new MakeUrlSet(host, protocol);
 
-        Set<String> nodeUrlSet = make.getUrlSet(url, 3);
-        format.addUrlNodeList(nodeUrlSet);
+//        Set<String> nodeUrlSet = make.getUrlSet(url, 3);
+//        format.addUrlNodeList(nodeUrlSet);
 
-//        format.addUrlNodeList(urlSet);
+        format.addUrlNodeList(urlSet);
 
         WriteTree.writeTree(nodeList.getNodeList(), CONSOLE, "");
         WriteTree.writeTree(nodeList.getNodeList(), TXT, "data/tree2.txt");
