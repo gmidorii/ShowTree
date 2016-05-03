@@ -1,5 +1,10 @@
 package crawling.URL;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -17,11 +22,15 @@ import java.util.Set;
 public class Crawl {
     private String urlName = "";
     private String host = "";
+    private String hostUrl = "";
+    private String protocol = "";
     final private String SEARCHTAG = "<a href";
 
-    public Crawl(String urlName, String host){
+    public Crawl(String urlName, String host, String protocol){
         this.urlName = urlName;
         this.host = host;
+        this.protocol = protocol;
+        this.hostUrl = protocol + "://" + host;
     }
 
     public String getUrlName() { return urlName; }
@@ -93,6 +102,62 @@ public class Crawl {
         }
 
         return urlSet;
+    }
+
+
+    public Set<String> getUrlSet(String url, int hierarchy){
+        Set<String> urlSet = new HashSet<>();
+        List<Set<String>> urlSetList = new ArrayList<>();
+        addUrlSet(url, urlSet);
+        URLFormatter format = new URLFormatter();
+        if(hierarchy > 0){
+            hierarchy--;
+            getUrlSet(hierarchy, urlSet, urlSetList);
+        }
+
+        HashSet<String> clearUrlSet = new HashSet<>();
+        for (Set<String> notCleanUrlSet : urlSetList) {
+            for (String urlBuf : notCleanUrlSet) {
+                clearUrlSet.add(format.removeUnnecessaryPart(new StringBuffer(urlBuf), host));
+            }
+        }
+        return clearUrlSet;
+    }
+
+    public void getUrlSet(int hierarchy, Set<String> urlSet, List<Set<String>> urlSetList){
+        Set<String> newUrlSet = new HashSet<>();
+        urlSet.parallelStream().forEach(url -> addUrlSetList(url, newUrlSet, urlSetList));
+        if(hierarchy > 0){
+            hierarchy--;
+            getUrlSet(hierarchy, newUrlSet, urlSetList);
+        }
+    }
+
+    public void addUrlSet(String url, Set<String> urlSet){
+        String urlStr = "";
+        try{
+            Document doc = Jsoup.connect(url.trim()).get();
+            Elements links = doc.getElementsByTag("a");
+            for (Element link : links){
+                urlStr = link.attr("href");
+                // host or 相対パス
+                if(urlStr.indexOf(host) != -1 || (urlStr.indexOf("/") == 0 && urlStr.indexOf("/", 1) != 1) ){
+                    urlSet.add(urlStr);
+                }
+            }
+        }catch(IOException e){}
+    }
+
+    public void addUrlSetList(String url, Set<String> urlSet, List<Set<String>> urlSetList){
+        //相対パスの時
+        if(url.indexOf(host) == -1){
+            url = hostUrl + url;
+        }else if(url.indexOf(protocol) == -1){
+            url = protocol + ":"+ url;
+        }
+
+        addUrlSet(url, urlSet);
+        urlSetList.add(urlSet);
     }
 
 }

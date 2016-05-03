@@ -1,8 +1,9 @@
 package crawling;
 
-import crawling.Node.Node;
-import crawling.Node.NodeFormatter;
-import crawling.Node.NodeList;
+import crawling.node.Node;
+import crawling.node.NodeFormatter;
+import crawling.node.NodeList;
+import crawling.URL.Crawl;
 import crawling.URL.InputURL;
 import crawling.URL.MakeUrlSet;
 import crawling.URL.URLFormatter;
@@ -28,6 +29,10 @@ public class Main {
         String host = rootUrl.getHost();
         String protocol = rootUrl.getProtocol();
         URLFormatter urlformat = new URLFormatter();
+        Crawl crawl = new Crawl(url, host, protocol);
+
+        //Jsoup利用
+//        Set<String> urlSet = crawl.getUrlSet(url, 2);
 
         // nodelist 作成
         NodeList nodeList = NodeList.generateNodeList(rootUrl.getHost());
@@ -38,9 +43,10 @@ public class Main {
         Set<String> nodeUrlSet = make.getUrlSet(url, 3);
         format.addUrlNodeList(nodeUrlSet);
 
+//        format.addUrlNodeList(urlSet);
+
         WriteTree.writeTree(nodeList.getNodeList(), CONSOLE, "");
         WriteTree.writeTree(nodeList.getNodeList(), TXT, "data/tree2.txt");
-
 
         long end = System.currentTimeMillis();
         printTime(start, end, "AllTime");

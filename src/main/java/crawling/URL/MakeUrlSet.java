@@ -24,7 +24,7 @@ public class MakeUrlSet {
 
     public Set<String> getUrlSet(String url, int hierarchy){
         Set<String> resultUrlSet = new HashSet<>();
-        Crawl crawl = new Crawl(url, host);
+        Crawl crawl = new Crawl(url, host, protocol);
         URLFormatter urlFormat = new URLFormatter();
         StringBuffer sbUrl = new StringBuffer("");
 
@@ -60,7 +60,7 @@ public class MakeUrlSet {
 
         // htmlをスクレイピングしurlSetを作りresultUrlSetに入れる
         Set<String> newUrlSet = new HashSet<>();
-        Crawl crawl = new Crawl(url, host);
+        Crawl crawl = new Crawl(url, host, protocol);
         for(StringBuffer html: htmlList){
             newUrlSet = crawl.generateUrlSet(html);
             addUrlSet(newUrlSet, resultUrlSet);
@@ -79,9 +79,9 @@ public class MakeUrlSet {
         if(url.indexOf(host) != 0){
             StringBuffer newUrl = new StringBuffer(url);
             newUrl.insert(0, hostUrl);
-            crawl = new Crawl(newUrl.toString(), host);
+            crawl = new Crawl(newUrl.toString(), host, protocol);
         }else{
-            crawl = new Crawl(url, host);
+            crawl = new Crawl(url, host, protocol);
         }
 
         StringBuffer sb = crawl.HtmlToString();

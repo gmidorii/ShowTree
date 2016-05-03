@@ -1,4 +1,4 @@
-package crawling.Node;
+package crawling.node;
 
 import java.util.HashSet;
 import java.util.Set;
