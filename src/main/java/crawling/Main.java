@@ -9,6 +9,9 @@ import crawling.input.InputURL;
 import crawling.input.MakeUrlSet;
 import crawling.input.URLFormatter;
 import crawling.output.WriteTree;
+import crawling.selector.CrawlUrl;
+import crawling.selector.Selector;
+import crawling.selector.ShowTree;
 
 import java.io.*;
 import java.net.URL;
@@ -24,48 +27,37 @@ import static crawling.output.OutputFormat.TXT;
  * Created by midori on 2016/04/19.
  */
 public class Main {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args){
         long start = System.currentTimeMillis();
+        System.out.println("どちらを行いますか？");
+        System.out.println("1.URLリストを取得");
+        System.out.println("2.パスツリーを表示");
+        System.out.println("1 or 2");
+        System.out.print(">");
+        try(BufferedReader br = new BufferedReader(new InputStreamReader(System.in))){
+            while(true){
+                String in = br.readLine();
 
-        // URL 取得
-//        InputURL input = new InputURL();
-//        String url = input.inputURL();
-//
-//
-//        URL rootUrl = new URL(url);
-//        String host = rootUrl.getHost();
-//        String protocol = rootUrl.getProtocol();
-//        URLFormatter urlformat = new URLFormatter();
-//        Crawl crawl = new Crawl(url, host, protocol);
-
-        // File input
-        InputFile inFile = new InputFile();
-        List<String> urlList = new ArrayList<>();
-        inFile.inputFile("data/urlset/test.txt", urlList);
-
-        URL url = new URL(urlList.get(0));
-        String host = url.getHost();
-        String protocol = url.getProtocol();
-        urlList.remove(0);
-
-        //Jsoup利用
-//        Set<String> urlSet = crawl.getUrlSet(url, 0);
-
-        // nodelist 作成
-        NodeList nodeList = NodeList.generateNodeList(host);
-        Node rootNode = nodeList.getHost();
-        NodeFormatter nodeFormat = new NodeFormatter(rootNode);
-        MakeUrlSet make = new MakeUrlSet(host, protocol);
-
-//        Set<String> nodeUrlSet = make.getUrlSet(url, 3);
-//        format.addUrlNodeList(nodeUrlSet);
+                if(!in.equals("1") && !in.equals("2")){
+                    System.out.println("1 or 2 を入力してください");
+                    System.out.print(">");
+                    continue;
+                }
 
 
+                Selector choice = null;
+                if(in.equals("1")){
+                    choice = new CrawlUrl();
+                }else if(in.equals("2")){
+                    choice = new ShowTree();
+                }
 
-        nodeFormat.addUrlNodeList(urlList);
-
-        WriteTree.writeTree(nodeList.getNodeList(), CONSOLE, "");
-        WriteTree.writeTree(nodeList.getNodeList(), TXT, "data/tree2.txt");
+                choice.select();
+                break;
+            }
+        }catch (IOException e){
+            e.printStackTrace();
+        }
 
         long end = System.currentTimeMillis();
         printTime(start, end, "AllTime");

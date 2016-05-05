@@ -24,11 +24,11 @@ public class WriteTreeFormatTxt implements WriteTreeFormat {
     @Override
     public void writeNode() {
         Path path = Paths.get(filePath);
-        Node rootNode = nodeList.get(0);
+        Node hostNode = nodeList.get(0);
         String LINEFEEDCODE = "\n";
         try (BufferedWriter bw = Files.newBufferedWriter(path)) {
-            bw.write(rootNode.getNodeName() + LINEFEEDCODE);
-            for (Node childNode : rootNode.getChildrenNode()) {
+            bw.write(hostNode.getNodeName() + LINEFEEDCODE);
+            for (Node childNode : hostNode.getChildrenNode()) {
                 bw.write("|-" + childNode.getNodeName() + LINEFEEDCODE);
                 recurChildNodeWriteFile(childNode, 1, bw);
             }

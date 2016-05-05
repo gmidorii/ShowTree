@@ -49,6 +49,7 @@ public class NodeList {
     // test code
     public void printNodeList(){
         for (Node node : nodeList) {
+            System.out.print(node.getParentNode() + "-");
             System.out.print(node);
             System.out.print("-");
             System.out.println(node.getChildrenNode());

@@ -8,16 +8,16 @@ import java.util.Set;
  * Created by midori on 2016/04/23.
  */
 public class NodeFormatter {
-    private Node rootNode;
+    private Node hostNode;
 
-    public NodeFormatter(Node rootNode){
-        this.rootNode = rootNode;
+    public NodeFormatter(Node hostNode){
+        this.hostNode = hostNode;
     }
 
-    public void addUrlNodeList(List<String> urlSet){
+    public void addUrlNodeList(List<String> urlList){
         String[] nodeArray;
         List<Node> nodeList;
-        for (String url : urlSet) {
+        for (String url : urlList) {
             if (url.length() != 0){
                 nodeArray = url.split("/");
                 nodeList = createNodeList(nodeArray);
@@ -40,18 +40,18 @@ public class NodeFormatter {
 
     public void registerParentNode(List<Node> nodeList){
         try {
-            nodeList.get(0).setParentNode(rootNode.getNodeName());
+            nodeList.get(0).setParentNode(hostNode.getNodeName());
         }catch (IndexOutOfBoundsException e){
             System.out.println(nodeList);
         }
 
         for(int i = 1; i < nodeList.size(); i++){
-            nodeList.get(i).setParentNode(nodeList.get(i - 1).getParentNode());
+            nodeList.get(i).setParentNode(nodeList.get(i - 1).getNodeName());
         }
     }
 
     public void registerChildrenNode(List<Node> nodeList){
-        rootNode.appendChildrenNode(nodeList.get(0));
+        hostNode.appendChildrenNode(nodeList.get(0));
 
         for(int i = 0; i < nodeList.size() - 1; i++){
             nodeList.get(i).appendChildrenNode(nodeList.get(i + 1));
@@ -59,14 +59,18 @@ public class NodeFormatter {
     }
 
     public void addNodeList(List<Node> nodeList){
-        Node tmp;
-        NodeList stockList = NodeList.generateNodeList(rootNode.getNodeName());
+        Node stockNode;
+        NodeList stockList = NodeList.generateNodeList(hostNode.getNodeName());
         for (Node node : nodeList) {
-            if( (tmp = stockList.isNode(node)) == null){
+            if( (stockNode = stockList.isNode(node)) == null){
                 stockList.addNodeList(node);
             }else{
                 // すでにListに入っている場合
-                tmp.copyChildrenNode(node);
+                if(node.getChildrenNode().size() != 0){
+                    for (Node childNode : node.getChildrenNode()) {
+                        stockNode.copyChildrenNode(childNode);
+                    }
+                }
             }
         }
     }

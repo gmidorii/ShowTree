@@ -1,6 +1,7 @@
 package crawling.node;
 
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 /**
@@ -9,7 +10,7 @@ import java.util.Set;
 public class Node {
     private String nodeName;
     private String parentNodeName;
-    private Set<Node> childrenNode = new HashSet<>();
+    private Set<Node> childrenNode = new LinkedHashSet<>();
 
     public Node(String nodeName) {
         this.nodeName = nodeName;
@@ -34,9 +35,7 @@ public class Node {
     }
 
     public void copyChildrenNode(Node node){
-        for (Node nodeChild : node.getChildrenNode()) {
-            childrenNode.add(nodeChild);
-        }
+        childrenNode.add(node);
     }
 
     @Override

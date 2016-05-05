@@ -10,7 +10,7 @@ import java.util.Collection;
 /**
  * Created by midori on 2016/05/05.
  */
-public class InputFile extends Input{
+public class InputFile{
     public void inputFile(String filepath, Collection<String> col){
         Path path = Paths.get(filepath);
         String line = "";

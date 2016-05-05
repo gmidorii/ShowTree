@@ -16,9 +16,9 @@ public class WriteTreeFormatConsole implements WriteTreeFormat {
 
     @Override
     public void writeNode() {
-        Node rootNode = nodeList.get(0);
-        System.out.println(rootNode.getNodeName());
-        for(Node childNode: rootNode.getChildrenNode()){
+        Node hostNode = nodeList.get(0);
+        System.out.println(hostNode.getNodeName());
+        for(Node childNode: hostNode.getChildrenNode()){
             System.out.println("|-" + childNode);
             recurChildNode(childNode, 1);
         }
