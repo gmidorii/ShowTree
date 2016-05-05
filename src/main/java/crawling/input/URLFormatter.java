@@ -34,13 +34,16 @@ public class URLFormatter {
 
     public void removeChildren(StringBuilder url){
         int index = -1;
-        int SLASHCOUNT = 3;
+        int SLASHCOUNT = 2;
         int count = 0;
         while(count < SLASHCOUNT){
             index = url.indexOf("/", index + 1);
             count++;
         }
-        url.delete(index + 1, url.length());
+
+        if( (index = url.indexOf("/", index + 1)) != -1){
+            url.delete(index, url.length());
+        }
     }
 
 }

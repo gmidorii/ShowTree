@@ -29,14 +29,21 @@ import static crawling.output.OutputFormat.TXT;
 public class Main {
     public static void main(String[] args){
         long start = System.currentTimeMillis();
-        System.out.println("どちらを行いますか？");
-        System.out.println("1.URLリストを取得");
-        System.out.println("2.パスツリーを表示");
-        System.out.println("1 or 2");
-        System.out.print(">");
         try(BufferedReader br = new BufferedReader(new InputStreamReader(System.in))){
             while(true){
+                System.out.println("どちらを行いますか？");
+                System.out.println("1.URLリストを取得");
+                System.out.println("2.パスツリーを取得");
+                System.out.println("終了の場合は、「exit」を入力");
+                System.out.println("1 or 2 or exit");
+                System.out.print(">");
+
                 String in = br.readLine();
+
+                if(in.equals("exit")){
+                    System.out.println("システムを終了します");
+                    break;
+                }
 
                 if(!in.equals("1") && !in.equals("2")){
                     System.out.println("1 or 2 を入力してください");

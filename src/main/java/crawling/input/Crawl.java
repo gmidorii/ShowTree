@@ -111,14 +111,14 @@ public class Crawl {
 
 
     /*****  Jsoup 利用 ****/
-    public Set<String> getUrlSet(String url, int hierarchy){
+    public Set<String> getUrlSet(int hierarchy){
         Set<String> urlSet = new HashSet<>();
         List<Set<String>> urlSetList = new ArrayList<>();
-        addUrlSet(url, urlSet);
+        addUrlSet(urlName, urlSet);
         URLFormatter format = new URLFormatter();
         urlSetList.add(urlSet);
+        hierarchy--;
         if(hierarchy > 0){
-            hierarchy--;
             getUrlSet(hierarchy, urlSet, urlSetList);
         }
 
@@ -133,9 +133,9 @@ public class Crawl {
 
     public void getUrlSet(int hierarchy, Set<String> urlSet, List<Set<String>> urlSetList){
         Set<String> newUrlSet = new HashSet<>();
-        urlSet.parallelStream().forEach(url -> addUrlSetList(url, newUrlSet, urlSetList));
+        urlSet.forEach(url -> addUrlSetList(url, newUrlSet, urlSetList));
+        hierarchy--;
         if(hierarchy > 0){
-            hierarchy--;
             getUrlSet(hierarchy, newUrlSet, urlSetList);
         }
     }
@@ -144,6 +144,7 @@ public class Crawl {
         String urlStr = "";
         try{
             Document doc = Jsoup.connect(url.trim()).get();
+            Thread.sleep(1000);
             Elements links = doc.getElementsByTag("a");
             for (Element link : links){
                 urlStr = link.attr("href");
@@ -152,7 +153,9 @@ public class Crawl {
                     urlSet.add(urlStr);
                 }
             }
-        }catch(IOException e){}
+        }catch(IOException e){
+        }catch (InterruptedException e){}
+
     }
 
     public void addUrlSetList(String url, Set<String> urlSet, List<Set<String>> urlSetList){

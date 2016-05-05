@@ -35,38 +35,42 @@ public class ShowTree extends Selector {
 
         String in = "";
         int fileNum = 0;
+
+        // File input
         try(BufferedReader br = new BufferedReader(new InputStreamReader(System.in))){
             in = br.readLine();
             //TODO:入力値判定
             fileNum = Integer.parseInt(in);
+
+
+            String filepath = files[fileNum].toString();
+            InputFile inFile = new InputFile();
+            List<String> urlList = new ArrayList<>();
+            inFile.inputFile(filepath, urlList);
+
+            URL url = null;
+            try {
+                url = new URL(urlList.get(0));
+            }catch (MalformedURLException e){
+                System.out.println("url error");
+                return;
+            }
+
+            String host = url.getHost();
+            urlList.remove(0);
+
+            // nodelist 作成
+            NodeList nodeList = NodeList.generateNodeList(host);
+            Node hostNode = nodeList.getHost();
+            NodeFormatter nodeFormat = new NodeFormatter(hostNode);
+            nodeFormat.addUrlNodeList(urlList);
+
+            WriteTree.writeTree(nodeList.getNodeList(), CONSOLE, "");
+            WriteTree.writeTree(nodeList.getNodeList(), TXT, "data/result/" + host);
+
         }catch (IOException e){
 
         }
 
-        // File input
-        String filepath = files[fileNum].toString();
-        InputFile inFile = new InputFile();
-        List<String> urlList = new ArrayList<>();
-        inFile.inputFile(filepath, urlList);
-
-        URL url = null;
-        try {
-            url = new URL(urlList.get(0));
-        }catch (MalformedURLException e){
-            System.out.println("url error");
-            return;
-        }
-
-        String host = url.getHost();
-        urlList.remove(0);
-
-        // nodelist 作成
-        NodeList nodeList = NodeList.generateNodeList(host);
-        Node hostNode = nodeList.getHost();
-        NodeFormatter nodeFormat = new NodeFormatter(hostNode);
-        nodeFormat.addUrlNodeList(urlList);
-
-        WriteTree.writeTree(nodeList.getNodeList(), CONSOLE, "");
-        WriteTree.writeTree(nodeList.getNodeList(), TXT, "data/tree2.txt");
     }
 }
