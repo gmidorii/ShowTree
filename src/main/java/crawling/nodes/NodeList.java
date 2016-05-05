@@ -1,4 +1,4 @@
-package crawling.node;
+package crawling.nodes;
 
 import java.util.ArrayList;
 import java.util.List;

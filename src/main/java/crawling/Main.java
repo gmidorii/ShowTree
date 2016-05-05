@@ -1,26 +1,10 @@
 package crawling;
 
-import crawling.file.InputFile;
-import crawling.node.Node;
-import crawling.node.NodeFormatter;
-import crawling.node.NodeList;
-import crawling.input.Crawl;
-import crawling.input.InputURL;
-import crawling.input.MakeUrlSet;
-import crawling.input.URLFormatter;
-import crawling.output.WriteTree;
 import crawling.selector.CrawlUrl;
 import crawling.selector.Selector;
 import crawling.selector.ShowTree;
 
 import java.io.*;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-
-import static crawling.output.OutputFormat.CONSOLE;
-import static crawling.output.OutputFormat.TXT;
 
 
 /**

@@ -2,9 +2,9 @@ package crawling.selector;
 
 import crawling.file.InputFile;
 import crawling.input.MakeUrlSet;
-import crawling.node.Node;
-import crawling.node.NodeFormatter;
-import crawling.node.NodeList;
+import crawling.nodes.Node;
+import crawling.nodes.NodeFormatter;
+import crawling.nodes.NodeList;
 import crawling.output.WriteTree;
 
 import java.io.BufferedReader;

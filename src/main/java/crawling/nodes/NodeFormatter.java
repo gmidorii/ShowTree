@@ -1,8 +1,7 @@
-package crawling.node;
+package crawling.nodes;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by midori on 2016/04/23.

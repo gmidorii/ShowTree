@@ -1,6 +1,6 @@
 package crawling.output;
 
-import crawling.node.Node;
+import crawling.nodes.Node;
 
 import java.io.BufferedWriter;
 import java.io.IOException;

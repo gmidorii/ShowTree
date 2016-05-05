@@ -1,6 +1,5 @@
-package crawling.node;
+package crawling.nodes;
 
-import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
