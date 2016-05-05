@@ -1,4 +1,4 @@
-package crawling.URL;
+package crawling.input;
 
 import javax.net.ssl.HttpsURLConnection;
 import java.io.BufferedReader;

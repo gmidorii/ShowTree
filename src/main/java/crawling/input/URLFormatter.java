@@ -1,7 +1,4 @@
-package crawling.URL;
-
-import java.util.ArrayList;
-import java.util.List;
+package crawling.input;
 
 /**
  * Created by midori on 2016/04/22.

@@ -14,7 +14,7 @@ public class NodeFormatter {
         this.rootNode = rootNode;
     }
 
-    public void addUrlNodeList(Set<String> urlSet){
+    public void addUrlNodeList(List<String> urlSet){
         String[] nodeArray;
         List<Node> nodeList;
         for (String url : urlSet) {

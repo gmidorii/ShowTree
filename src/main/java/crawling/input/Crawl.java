@@ -1,4 +1,4 @@
-package crawling.URL;
+package crawling.input;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -9,7 +9,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -37,6 +36,8 @@ public class Crawl {
     public String getHost() { return host; }
 
 
+
+    /*****   ライブラリ利用なし   ****/
     public StringBuffer HtmlToString(){
         StringBuffer str = new StringBuffer();
         try {
@@ -53,7 +54,7 @@ public class Crawl {
             }
 
         }catch (IOException e){
-//            e.printStackTrace();
+            e.printStackTrace();
         }
         return str;
     }
@@ -104,8 +105,12 @@ public class Crawl {
         return urlSet;
     }
 
+    /*****  ライブラリ利用なし(ここまで) ****/
 
-    // Jsoup 利用
+
+
+
+    /*****  Jsoup 利用 ****/
     public Set<String> getUrlSet(String url, int hierarchy){
         Set<String> urlSet = new HashSet<>();
         List<Set<String>> urlSetList = new ArrayList<>();
@@ -161,5 +166,7 @@ public class Crawl {
         addUrlSet(url, urlSet);
         urlSetList.add(urlSet);
     }
+
+    /*****  Jsoup 利用(ここまで) ****/
 
 }

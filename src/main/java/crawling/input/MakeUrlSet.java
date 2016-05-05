@@ -1,4 +1,4 @@
-package crawling.URL;
+package crawling.input;
 
 import java.util.ArrayList;
 import java.util.HashSet;
