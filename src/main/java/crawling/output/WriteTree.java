@@ -9,14 +9,14 @@ import java.util.List;
  */
 public class WriteTree {
 
-    public static void writeTree(List<Node> nodeList, OutputFormat format, String filePath){
+    public static void writeTree(List<Node> nodeList, OutputFormat format, String filename){
         WriteTreeFormat wFormat = null;
         switch (format){
             case CONSOLE:
                 wFormat = new WriteTreeFormatConsole(nodeList);
                 break;
             case TXT:
-                wFormat = new WriteTreeFormatTxt(nodeList, filePath);
+                wFormat = new WriteTreeFormatTxt(nodeList, "data/result/" + filename + ".txt");
                 break;
             case CSV:
                 break;

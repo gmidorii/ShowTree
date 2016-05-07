@@ -1,10 +1,12 @@
 package crawling.selector;
 
+import crawling.Main;
 import crawling.file.InputFile;
 import crawling.input.MakeUrlSet;
 import crawling.nodes.Node;
 import crawling.nodes.NodeFormatter;
 import crawling.nodes.NodeList;
+import crawling.output.OutputFormat;
 import crawling.output.WriteTree;
 
 import java.io.BufferedReader;
@@ -15,6 +17,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import static crawling.output.OutputFormat.CONSOLE;
 import static crawling.output.OutputFormat.TXT;
@@ -25,21 +28,35 @@ import static crawling.output.OutputFormat.TXT;
 public class ShowTree extends Selector {
     @Override
     public void select(){
-
+        Main.newLine();
         File dir = new File("data/urlset");
         File files[] = dir.listFiles();
-        for (int i = 0; i < files.length; i++) {
-            System.out.println(i + "." + files[i].getName());
-        }
-        System.out.print(">");
-
         String in = "";
         int fileNum = 0;
 
         // File input
         try(BufferedReader br = new BufferedReader(new InputStreamReader(System.in))){
-            in = br.readLine();
-            //TODO:入力値判定
+            String regexFile = "[0-" + (files.length - 1) + "]";
+            while (true){
+                System.out.println("■ 取得したいファイルを選択してください");
+                for (int i = 0; i < files.length; i++) {
+                    System.out.println(i + "." + files[i].getName());
+                }
+                Main.newLine();
+                System.out.println("0 ~ " + (files.length - 1) + " を入力");
+                System.out.print(">");
+
+                in = br.readLine();
+
+                if(Pattern.matches(regexFile, in)) {
+                    break;
+                }
+
+                Main.newLine();
+                System.out.println("※指定する数を入力してください");
+                Main.newLine();
+            }
+
             fileNum = Integer.parseInt(in);
 
 
@@ -65,8 +82,34 @@ public class ShowTree extends Selector {
             NodeFormatter nodeFormat = new NodeFormatter(hostNode);
             nodeFormat.addUrlNodeList(urlList);
 
-            WriteTree.writeTree(nodeList.getNodeList(), CONSOLE, "");
-            WriteTree.writeTree(nodeList.getNodeList(), TXT, "data/result/" + host);
+
+            OutputFormat outputFormat;
+            while(true){
+                String regexOut = "[0-" + OutputFormat.values().length + "]";
+                Main.newLine();
+                System.out.println("■ 出力形式を選択してください");
+                int number = 0;
+                for(OutputFormat value: OutputFormat.values()){
+                    System.out.println(number + ". " + value.getName());
+                    number++;
+                }
+
+                Main.newLine();
+                System.out.println("0 ~ " + OutputFormat.values().length + " を入力");
+                System.out.print(">");
+                in = br.readLine();
+
+                if(in == null){
+                    continue;
+                }
+
+                if(Pattern.matches(regexOut, in)){
+                    outputFormat = OutputFormat.values()[Integer.parseInt(in)];
+                    break;
+                }
+            }
+
+            WriteTree.writeTree(nodeList.getNodeList(), outputFormat, host);
 
         }catch (IOException e){
 
