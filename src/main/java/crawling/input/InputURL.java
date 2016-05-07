@@ -20,7 +20,7 @@ public class InputURL {
         format = new URLFormatter();
     }
 
-    public String inputURL(){
+    public String inputURL() throws IOException{
         StringBuilder url = null;
         int URLMAXLENGTH  = 200;
 
@@ -28,30 +28,25 @@ public class InputURL {
         System.out.println("■ URLを入力してください");
         System.out.println("例: https://ja.wikipedia.org/wiki/メインページ");
         System.out.print(">");
-        try(BufferedReader br = new BufferedReader(new InputStreamReader(System.in))) {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-            while (true){
-                try{
-                    url = new StringBuilder(br.readLine().trim());
-                    if (url == null || url.length() == 0 || url.length() > URLMAXLENGTH) {
-                        throw new IOException();
-                    }
-
-                    if(isExistURL(url.toString())){
-                        format.removeChildren(url);
-                        break;
-                    }else{
-                        throw new IOException();
-                    }
-                }catch (IOException e){
-                    System.out.println("再入力してください");
-                    System.out.print(">");
+        while (true){
+            try{
+                url = new StringBuilder(br.readLine().trim());
+                if (url == null || url.length() == 0 || url.length() > URLMAXLENGTH) {
+                    throw new IOException();
                 }
-            }
 
-        }catch(IOException e){
-            System.out.println("システムを終了します");
-            System.exit(1);
+                if(isExistURL(url.toString())){
+                    format.removeChildren(url);
+                    break;
+                }else{
+                    throw new IOException();
+                }
+            }catch (IOException e){
+                System.out.println("再入力してください");
+                System.out.print(">");
+            }
         }
 
         return url.toString();

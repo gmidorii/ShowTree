@@ -16,10 +16,11 @@ public class Main {
         long start = System.currentTimeMillis();
         System.out.println("【システム内容】");
         System.out.println("URLのリストから、パス構造を取得するシステムです");
-        newLine();
         try(BufferedReader br = new BufferedReader(new InputStreamReader(System.in))){
             while(true){
-                System.out.println("■ どちらを行いますか？");
+                newLine();
+                newLine();
+                System.out.println("■ どちらを行いますか？(スタート)");
                 newLine();
                 System.out.println("1.URLリストを取得");
                 System.out.println("2.パスツリーを取得");
@@ -50,7 +51,7 @@ public class Main {
                 }
 
                 choice.select();
-                break;
+
             }
         }catch (IOException e){
             e.printStackTrace();

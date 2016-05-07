@@ -17,7 +17,7 @@ import java.util.Set;
  */
 public class CrawlUrl extends Selector{
     @Override
-    public void select() {
+    public void select() throws IOException{
         int hierarchy = 0;
         int MAXHIERARCHY = 3;
         String line = "";
@@ -29,48 +29,44 @@ public class CrawlUrl extends Selector{
         System.out.println("1 ~ " + MAXHIERARCHY +" を入力");
         System.out.print(">");
 
-        try(BufferedReader br = new BufferedReader(new InputStreamReader(System.in))){
-            while(true){
-                line = br.readLine();
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        while(true){
+            line = br.readLine();
 
-                if(line == null){
-                    throw new IOException();
-                }
-
-                for(int i = 1; i <= MAXHIERARCHY; i++){
-                    if(line.equals(String.valueOf(i))){
-                        hierarchy = i;
-                        break;
-                    }
-                }
-
-                if(hierarchy <= 0 || hierarchy > MAXHIERARCHY){
-                    System.out.println("1 ~ " + MAXHIERARCHY + "の数値を再入力してください");
-                    System.out.print(">");
-                    continue;
-                }
-
-                break;
+            if(line == null){
+                throw new IOException();
             }
 
-            InputURL input = new InputURL();
-            URL url = null;
-            try {
-                url = new URL(input.inputURL());
-            }catch (MalformedURLException e){
-
+            for(int i = 1; i <= MAXHIERARCHY; i++){
+                if(line.equals(String.valueOf(i))){
+                    hierarchy = i;
+                    break;
+                }
             }
-            Crawl crawl = new Crawl(url.toString(), url.getHost(), url.getProtocol());
-            Set<String> urlSet = crawl.getUrlSet(hierarchy);
 
-            WriteFile write = new WriteFile();
-            write.writeUrlSetFile(urlSet, url.getHost(), url.toString());
+            if(hierarchy <= 0 || hierarchy > MAXHIERARCHY){
+                System.out.println("1 ~ " + MAXHIERARCHY + "の数値を再入力してください");
+                System.out.print(">");
+                continue;
+            }
 
-            return;
-
-        }catch (IOException e){
-            e.printStackTrace();
-            return;
+            break;
         }
+
+        InputURL input = new InputURL();
+        URL url = null;
+        try {
+            url = new URL(input.inputURL());
+        }catch (MalformedURLException e){
+
+        }
+        Crawl crawl = new Crawl(url.toString(), url.getHost(), url.getProtocol());
+        Set<String> urlSet = crawl.getUrlSet(hierarchy);
+
+        WriteFile write = new WriteFile();
+        write.writeUrlSetFile(urlSet, url.getHost(), url.toString());
+
+        return;
+
     }
 }
