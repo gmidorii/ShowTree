@@ -16,7 +16,7 @@ import java.util.Set;
  */
 public class WriteFile {
     public void writeUrlSetFile(Set<String> urlSet, String fileName, String url){
-        Path filepath = Paths.get("data/urlset/" + fileName);
+        Path filepath = Paths.get("data/urlset/" + fileName + ".txt");
         try(BufferedWriter bw = Files.newBufferedWriter(filepath)){
             bw.write(url);
             bw.write(Main.ctrl);
@@ -27,7 +27,7 @@ public class WriteFile {
 
             Main.newLine();
             System.out.println("------ 書き込み完了 ------");
-            System.out.println("ファイル名 : " + fileName);
+            System.out.println("ファイル名 : " + fileName + ".txt");
             System.out.println("TotalURLs:" + urlSet.size());
             System.out.println("--------------------------");
         }catch (IOException e){

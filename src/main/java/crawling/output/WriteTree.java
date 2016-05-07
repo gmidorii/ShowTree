@@ -16,7 +16,7 @@ public class WriteTree {
                 wFormat = new WriteTreeFormatConsole(nodeList);
                 break;
             case TXT:
-                wFormat = new WriteTreeFormatTxt(nodeList, "data/result/" + filename + ".txt");
+                wFormat = new WriteTreeFormatTxt(nodeList, "data/txt/" + filename + ".txt");
                 break;
             case CSV:
                 break;
