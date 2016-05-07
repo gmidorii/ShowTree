@@ -1,5 +1,7 @@
 package crawling.file;
 
+import crawling.Main;
+
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.net.URLDecoder;
@@ -14,18 +16,20 @@ import java.util.Set;
  */
 public class WriteFile {
     public void writeUrlSetFile(Set<String> urlSet, String fileName, String url){
-        String ctrl = System.lineSeparator();
         Path filepath = Paths.get("data/urlset/" + fileName);
         try(BufferedWriter bw = Files.newBufferedWriter(filepath)){
             bw.write(url);
-            bw.write(ctrl);
+            bw.write(Main.ctrl);
             for (String inUrl : urlSet) {
                 bw.write(URLDecoder.decode(inUrl, StandardCharsets.UTF_8.name()));
-                bw.write(ctrl);
+                bw.write(Main.ctrl);
             }
 
-            System.out.println("書き込み完了");
+            Main.newLine();
+            System.out.println("------ 書き込み完了 ------");
             System.out.println("ファイル名 : " + fileName);
+            System.out.println("TotalURLs:" + urlSet.size());
+            System.out.println("--------------------------");
         }catch (IOException e){
 
         }

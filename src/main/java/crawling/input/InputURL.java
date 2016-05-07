@@ -1,5 +1,7 @@
 package crawling.input;
 
+import crawling.Main;
+
 import javax.net.ssl.HttpsURLConnection;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -22,7 +24,9 @@ public class InputURL {
         StringBuilder url = null;
         int URLMAXLENGTH  = 200;
 
-        System.out.println("URLを入力してください");
+        Main.newLine();
+        System.out.println("■ URLを入力してください");
+        System.out.println("例: https://ja.wikipedia.org/wiki/メインページ");
         System.out.print(">");
         try(BufferedReader br = new BufferedReader(new InputStreamReader(System.in))) {
 

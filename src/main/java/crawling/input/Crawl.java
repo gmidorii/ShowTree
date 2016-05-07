@@ -112,6 +112,7 @@ public class Crawl {
 
     /*****  Jsoup 利用 ****/
     public Set<String> getUrlSet(int hierarchy){
+        System.out.println("-----------------");
         Set<String> urlSet = new HashSet<>();
         List<Set<String>> urlSetList = new ArrayList<>();
         fetchUrlSet(urlName, urlSet);
@@ -132,6 +133,7 @@ public class Crawl {
     }
 
     public void getUrlSet(int hierarchy, Set<String> urlSet, List<Set<String>> urlSetList){
+        System.out.println("-----------------");
         Set<String> newUrlSet = new HashSet<>();
         urlSet.forEach(url -> fetchUrlSet(url, newUrlSet));
         urlSetList.add(newUrlSet);
@@ -152,7 +154,7 @@ public class Crawl {
 
         try{
             Document doc = Jsoup.connect(url.trim()).get();
-            Thread.sleep(1000);
+            Thread.sleep(1300);
             Elements links = doc.getElementsByTag("a");
             for (Element link : links){
                 urlStr = link.attr("href");
@@ -162,7 +164,7 @@ public class Crawl {
                 }
             }
 
-            System.out.println("urls:" + urlSet.size());
+            System.out.println("GetURLs:" + urlSet.size());
         }catch(IOException e){
         }catch (InterruptedException e){}
 

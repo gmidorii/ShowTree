@@ -1,5 +1,6 @@
 package crawling.selector;
 
+import crawling.Main;
 import crawling.file.WriteFile;
 import crawling.input.Crawl;
 import crawling.input.InputURL;
@@ -20,8 +21,12 @@ public class CrawlUrl extends Selector{
         int hierarchy = 0;
         int MAXHIERARCHY = 3;
         String line = "";
+        Main.newLine();
+        System.out.println("■ URLを探索します");
         System.out.println("調べる階層を選択してください");
-        System.out.println("1 ~ 3");
+        System.out.println("※2以上は時間がかかります");
+        Main.newLine();
+        System.out.println("1 ~ " + MAXHIERARCHY +" を入力");
         System.out.print(">");
 
         try(BufferedReader br = new BufferedReader(new InputStreamReader(System.in))){

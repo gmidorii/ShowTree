@@ -11,15 +11,21 @@ import java.io.*;
  * Created by midori on 2016/04/19.
  */
 public class Main {
+    public static String ctrl =  System.lineSeparator();
     public static void main(String[] args){
         long start = System.currentTimeMillis();
+        System.out.println("【システム内容】");
+        System.out.println("URLのリストから、パス構造を取得するシステムです");
+        newLine();
         try(BufferedReader br = new BufferedReader(new InputStreamReader(System.in))){
             while(true){
-                System.out.println("どちらを行いますか？");
+                System.out.println("■ どちらを行いますか？");
+                newLine();
                 System.out.println("1.URLリストを取得");
                 System.out.println("2.パスツリーを取得");
-                System.out.println("終了の場合は、「exit」を入力");
-                System.out.println("1 or 2 or exit");
+                System.out.println("(終了の場合は、「exit」を入力)");
+                newLine();
+                System.out.println("1 or 2 or exit を入力");
                 System.out.print(">");
 
                 String in = br.readLine();
@@ -30,8 +36,8 @@ public class Main {
                 }
 
                 if(!in.equals("1") && !in.equals("2")){
-                    System.out.println("1 or 2 を入力してください");
-                    System.out.print(">");
+                    System.out.println("ERROR : 1 or 2 を入力してください");
+                    newLine();
                     continue;
                 }
 
@@ -55,10 +61,14 @@ public class Main {
     }
 
     public static void printTime(long s, long e, String tag){
+        newLine();
         System.out.println("---------------------------");
         System.out.println(tag + ": " + (e - s) + "ms");
         System.out.println("---------------------------");
+        newLine();
     }
 
-
+    public static void newLine(){
+        System.out.print(ctrl);
+    }
 }
