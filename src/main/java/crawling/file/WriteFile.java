@@ -17,21 +17,31 @@ import java.util.Set;
 public class WriteFile {
     public void writeUrlSetFile(Set<String> urlSet, String fileName, String url){
         Path filepath = Paths.get("data/urlset/" + fileName + ".txt");
-        try(BufferedWriter bw = Files.newBufferedWriter(filepath)){
-            bw.write(url);
-            bw.write(Main.ctrl);
-            for (String inUrl : urlSet) {
-                bw.write(URLDecoder.decode(inUrl, StandardCharsets.UTF_8.name()));
+        int excCount = 0;
+        int EXCLIMIT = 3;
+        while(true){
+            try(BufferedWriter bw = Files.newBufferedWriter(filepath)){
+                bw.write(url);
                 bw.write(Main.ctrl);
+                for (String inUrl : urlSet) {
+                    bw.write(URLDecoder.decode(inUrl, StandardCharsets.UTF_8.name()));
+                    bw.write(Main.ctrl);
+                }
+
+                Main.newLine();
+                System.out.println("------ 書き込み完了 ------");
+                System.out.println("ファイル名 : " + fileName + ".txt");
+                System.out.println("TotalURLs:" + urlSet.size());
+                System.out.println("--------------------------");
+                break;
+            }catch (IOException e){
+                filepath = Paths.get("temporary.txt");
+                excCount++;
+                if(excCount > EXCLIMIT){
+                    System.out.println("書き込みに失敗しました");
+                    break;
+                }
             }
-
-            Main.newLine();
-            System.out.println("------ 書き込み完了 ------");
-            System.out.println("ファイル名 : " + fileName + ".txt");
-            System.out.println("TotalURLs:" + urlSet.size());
-            System.out.println("--------------------------");
-        }catch (IOException e){
-
         }
     }
 }

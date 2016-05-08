@@ -12,16 +12,12 @@ public class URLManager {
     private String protocol;
     private String hostUrl;
 
-    public URLManager(String url){
+    public URLManager(String url) throws MalformedURLException{
         this.url = url;
-        try {
-            URL urlObj = new URL(url);
-            this.host = urlObj.getHost();
-            this.protocol = urlObj.getProtocol();
-            this.hostUrl = protocol + "://" + host;
-        }catch (MalformedURLException e){
-
-        }
+        URL urlObj = new URL(url);
+        this.host = urlObj.getHost();
+        this.protocol = urlObj.getProtocol();
+        this.hostUrl = protocol + "://" + host;
     }
 
     // Getter

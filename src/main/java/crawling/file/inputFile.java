@@ -11,23 +11,20 @@ import java.util.Collection;
  * Created by midori on 2016/05/05.
  */
 public class InputFile{
-    public void inputFile(String filepath, Collection<String> col){
+    public void inputFile(String filepath, Collection<String> col) throws IOException{
         Path path = Paths.get(filepath);
         String line = "";
-        try(BufferedReader br = Files.newBufferedReader(path)){
-            while (true){
-                line = br.readLine();
-                if(line == null){
-                    break;
-                }
-
-                if(line.equals("")){
-                    continue;
-                }
-                col.add(line);
+        BufferedReader br = Files.newBufferedReader(path);
+        while (true){
+            line = br.readLine();
+            if(line == null){
+                break;
             }
-        }catch (IOException e){
-            e.printStackTrace();
+
+            if(line.equals("")){
+                continue;
+            }
+            col.add(line);
         }
     }
 }

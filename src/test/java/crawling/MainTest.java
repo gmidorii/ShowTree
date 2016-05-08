@@ -28,7 +28,7 @@ import static crawling.output.OutputFormat.TXT;
 public class MainTest {
 
     @Test
-    public void showTreeTest(){
+    public void showTreeTest() throws IOException{
         String filePath = "data/urlset/test.com.txt";
         List<String> urlList = new ArrayList<>();
         InputFile inFile = new InputFile();
@@ -87,7 +87,7 @@ public class MainTest {
     }
 
     @Test
-    public void blankUrlSet() {
+    public void blankUrlSet() throws IOException{
         Set<String> urlSet  = new HashSet<>();
         urlSet.add("gg/tt");
         urlSet.add("gg/tt/ge");
@@ -104,8 +104,8 @@ public class MainTest {
 
         InputFile in = new InputFile();
         List<String> urlList = new ArrayList<>();
-        in.inputFile("data/urlset/blank.txt", urlList);
 
+        in.inputFile("data/urlset/blank.txt", urlList);
         for (String url : urlList) {
             assertNotEquals(url, "");
         }

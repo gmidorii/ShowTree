@@ -25,7 +25,7 @@ public class CrawlUrl extends Selector{
         Main.newLine();
         System.out.println("■ URLを探索します");
         System.out.println("調べる階層を選択してください");
-        System.out.println("※2以上は時間がかかります");
+        System.out.println("※ 2以上は時間がかかります");
         Main.newLine();
         System.out.println("1 ~ " + MAXHIERARCHY +" を入力");
         System.out.print(">");
