@@ -24,8 +24,8 @@ public class MakeUrlSet {
 
     public Set<String> getUrlSet(String url, int hierarchy){
         Set<String> resultUrlSet = new HashSet<>();
-        Crawl crawl = new Crawl(url, host, protocol);
-        URLFormatter urlFormat = new URLFormatter();
+        URLManager urlFormat = new URLManager(url);
+        Crawl crawl = new Crawl(urlFormat);
         StringBuffer sbUrl = new StringBuffer("");
 
         // Crawling
@@ -35,7 +35,7 @@ public class MakeUrlSet {
         for (String stUrl : urlSet) {
             sbUrl.setLength(0);
             sbUrl.append(stUrl);
-            urlFormat.removeUnnecessaryPart(sbUrl, host);
+            urlFormat.removeUnnecessaryPart(sbUrl);
             if(sbUrl.length() != 0){
                 resultUrlSet.add(sbUrl.toString());
             }
@@ -60,7 +60,7 @@ public class MakeUrlSet {
 
         // htmlをスクレイピングしurlSetを作りresultUrlSetに入れる
         Set<String> newUrlSet = new HashSet<>();
-        Crawl crawl = new Crawl(url, host, protocol);
+        Crawl crawl = new Crawl(new URLManager(url));
         for(StringBuffer html: htmlList){
             newUrlSet = crawl.generateUrlSet(html);
             addUrlSet(newUrlSet, resultUrlSet);
@@ -79,25 +79,25 @@ public class MakeUrlSet {
         if(url.indexOf(host) != 0){
             StringBuffer newUrl = new StringBuffer(url);
             newUrl.insert(0, hostUrl);
-            crawl = new Crawl(newUrl.toString(), host, protocol);
+            crawl = new Crawl(new URLManager(newUrl.toString()));
         }else{
-            crawl = new Crawl(url, host, protocol);
+            crawl = new Crawl(new URLManager(url));
         }
 
         StringBuffer sb = crawl.HtmlToString();
         htmlList.add(sb);
     }
 
-    public String cleanUrl(String url, URLFormatter urlFormat){
+    public String cleanUrl(String url){
+        URLManager urlFormat = new URLManager(url);
         StringBuffer sbUrl = new StringBuffer(url);
-        urlFormat.removeUnnecessaryPart(sbUrl, host);
+        urlFormat.removeUnnecessaryPart(sbUrl);
         return sbUrl.toString();
     }
 
     public void addUrlSet(Set<String> urlSet, Set<String> nodeUrlSet){
-        URLFormatter urlFormat = new URLFormatter();
         for (String url : urlSet) {
-            String addUrl = cleanUrl(url, urlFormat);
+            String addUrl = cleanUrl(url);
             if(addUrl.length() != 0){
                 nodeUrlSet.add(addUrl);
             }

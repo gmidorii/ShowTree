@@ -14,15 +14,10 @@ import java.net.URL;
  * Created by midori on 2016/04/29.
  */
 public class InputURL {
-    private URLFormatter format;
-
-    public InputURL(){
-        format = new URLFormatter();
-    }
-
     public String inputURL() throws IOException{
         StringBuilder url = null;
         int URLMAXLENGTH  = 200;
+        URLManager urlManager;
 
         Main.newLine();
         System.out.println("■ URLを入力してください");
@@ -38,7 +33,8 @@ public class InputURL {
                 }
 
                 if(isExistURL(url.toString())){
-                    format.removeChildren(url);
+                    urlManager = new URLManager(url.toString());
+                    urlManager.removeChildren(url);
                     break;
                 }else{
                     throw new IOException();

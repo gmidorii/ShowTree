@@ -1,11 +1,45 @@
 package crawling.input;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+
 /**
  * Created by midori on 2016/04/22.
  */
-public class URLFormatter {
+public class URLManager {
+    private String url;
+    private String host;
+    private String protocol;
+    private String hostUrl;
 
-    public String removeUnnecessaryPart(StringBuffer url, String host){
+    public URLManager(String url){
+        this.url = url;
+        try {
+            URL urlObj = new URL(url);
+            this.host = urlObj.getHost();
+            this.protocol = urlObj.getProtocol();
+            this.hostUrl = protocol + "://" + host;
+        }catch (MalformedURLException e){
+
+        }
+    }
+
+    // Getter
+    public String getUrl() {
+        return url;
+    }
+    public String getHost() {
+        return host;
+    }
+    public String getProtocol() {
+        return protocol;
+    }
+    public String getHostUrl() {
+        return hostUrl;
+    }
+
+
+    public String removeUnnecessaryPart(StringBuffer url){
         removeParameter(url);
         removeHead(url, host + "/");
 

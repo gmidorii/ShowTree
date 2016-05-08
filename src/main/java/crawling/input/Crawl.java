@@ -19,29 +19,18 @@ import java.util.Set;
  * Created by midori on 2016/04/19.
  */
 public class Crawl {
-    private String urlName = "";
-    private String host = "";
-    private String hostUrl = "";
-    private String protocol = "";
+    private URLManager urlManager  = null;
     final private String SEARCHTAG = "<a href";
 
-    public Crawl(String urlName, String host, String protocol){
-        this.urlName = urlName;
-        this.host = host;
-        this.protocol = protocol;
-        this.hostUrl = protocol + "://" + host;
+    public Crawl(URLManager urlManager){
+        this.urlManager = urlManager;
     }
-
-    public String getUrlName() { return urlName; }
-    public String getHost() { return host; }
-
-
 
     /*****   ライブラリ利用なし   ****/
     public StringBuffer HtmlToString(){
         StringBuffer str = new StringBuffer();
         try {
-            URL url = new URL(urlName);
+            URL url = new URL(urlManager.getUrl());
             String host = url.getHost();
 
             InputStream input = url.openStream();
@@ -92,7 +81,7 @@ public class Crawl {
             }
 
             // add list
-            if(url.indexOf(host) != -1 || url.indexOf("/") == 0) {
+            if(url.indexOf(urlManager.getHost()) != -1 || url.indexOf("/") == 0) {
                 urlSet.add(url.toString());
                 count++;
             }
@@ -115,8 +104,7 @@ public class Crawl {
         System.out.println("-----------------");
         Set<String> urlSet = new HashSet<>();
         List<Set<String>> urlSetList = new ArrayList<>();
-        fetchUrlSet(urlName, urlSet);
-        URLFormatter format = new URLFormatter();
+        fetchUrlSet(urlManager.getUrl(), urlSet);
         urlSetList.add(urlSet);
         hierarchy--;
         if(hierarchy > 0){
@@ -126,7 +114,7 @@ public class Crawl {
         HashSet<String> clearUrlSet = new HashSet<>();
         for (Set<String> notCleanUrlSet : urlSetList) {
             for (String urlBuf : notCleanUrlSet) {
-                clearUrlSet.add(format.removeUnnecessaryPart(new StringBuffer(urlBuf), host));
+                clearUrlSet.add(urlManager.removeUnnecessaryPart(new StringBuffer(urlBuf)));
             }
         }
         return clearUrlSet;
@@ -146,10 +134,10 @@ public class Crawl {
     public void fetchUrlSet(String url, Set<String> urlSet){
         String urlStr = "";
         //相対パスの時
-        if(url.indexOf(host) == -1){
-            url = hostUrl + url;
-        }else if(url.indexOf(protocol) == -1){
-            url = protocol + ":"+ url;
+        if(url.indexOf(urlManager.getHost()) == -1){
+            url = urlManager.getHostUrl() + url;
+        }else if(url.indexOf(urlManager.getProtocol()) == -1){
+            url = urlManager.getProtocol() + ":"+ url;
         }
 
         try{
@@ -159,7 +147,7 @@ public class Crawl {
             for (Element link : links){
                 urlStr = link.attr("href");
                 // host or 相対パス
-                if(urlStr.indexOf(host) == (protocol.length() + 3) || (urlStr.indexOf("/") == 0 && urlStr.indexOf("/", 1) != 1) ){
+                if(urlStr.indexOf(urlManager.getHost()) == (urlManager.getProtocol().length() + 3) || (urlStr.indexOf("/") == 0 && urlStr.indexOf("/", 1) != 1) ){
                     urlSet.add(urlStr);
                 }
             }

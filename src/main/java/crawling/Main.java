@@ -14,6 +14,10 @@ public class Main {
     public static String ctrl =  System.lineSeparator();
     public static void main(String[] args){
         long start = System.currentTimeMillis();
+        System.out.println("============================");
+        System.out.println("||        ShowTree        ||");
+        System.out.println("============================");
+        newLine();
         System.out.println("【システム内容】");
         System.out.println("URLのリストから、パス構造を取得するシステムです");
         try(BufferedReader br = new BufferedReader(new InputStreamReader(System.in))){

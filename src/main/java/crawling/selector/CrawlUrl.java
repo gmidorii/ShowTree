@@ -4,6 +4,7 @@ import crawling.Main;
 import crawling.file.WriteFile;
 import crawling.input.Crawl;
 import crawling.input.InputURL;
+import crawling.input.URLManager;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -54,17 +55,12 @@ public class CrawlUrl extends Selector{
         }
 
         InputURL input = new InputURL();
-        URL url = null;
-        try {
-            url = new URL(input.inputURL());
-        }catch (MalformedURLException e){
-
-        }
-        Crawl crawl = new Crawl(url.toString(), url.getHost(), url.getProtocol());
+        URLManager urlManager = new URLManager(input.inputURL());
+        Crawl crawl = new Crawl(urlManager);
         Set<String> urlSet = crawl.getUrlSet(hierarchy);
 
         WriteFile write = new WriteFile();
-        write.writeUrlSetFile(urlSet, url.getHost(), url.toString());
+        write.writeUrlSetFile(urlSet, urlManager.getHost(), urlManager.getUrl());
 
         return;
 
