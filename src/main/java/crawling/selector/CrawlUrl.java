@@ -1,6 +1,7 @@
 package crawling.selector;
 
 import crawling.Main;
+import crawling.exception.FromBeginningException;
 import crawling.file.WriteFile;
 import crawling.input.Crawl;
 import crawling.input.InputURL;
@@ -18,7 +19,7 @@ import java.util.Set;
  */
 public class CrawlUrl extends Selector{
     @Override
-    public void select() throws IOException{
+    public void select() throws IOException, FromBeginningException{
         int hierarchy = 0;
         int MAXHIERARCHY = 3;
         String line = "";
@@ -37,6 +38,10 @@ public class CrawlUrl extends Selector{
 
             if(line == null){
                 throw new IOException();
+            }
+
+            if(line.equals("back")){
+                throw new FromBeginningException();
             }
 
             for(int i = 1; i <= MAXHIERARCHY; i++){

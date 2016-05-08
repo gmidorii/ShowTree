@@ -22,24 +22,21 @@ public class WriteTreeFormatTxt implements WriteTreeFormat {
     }
 
     @Override
-    public void writeNode() {
+    public void writeNode() throws IOException{
         Path path = Paths.get(filePath);
         Node hostNode = nodeList.get(0);
         String LINEFEEDCODE = "\n";
-        try (BufferedWriter bw = Files.newBufferedWriter(path)) {
-            bw.write(hostNode.getNodeName() + LINEFEEDCODE);
-            for (Node childNode : hostNode.getChildrenNode()) {
-                bw.write("|-" + childNode.getNodeName() + LINEFEEDCODE);
-                recurChildNodeWriteFile(childNode, 1, bw);
-            }
-
-            System.out.println("--------------- 書き込み完了 ---------------");
-            System.out.println("ファイル名 : " + filePath);
-            System.out.println("-------------------------------------------");
-
-        }catch (IOException e){
-            e.printStackTrace();
+        BufferedWriter bw = Files.newBufferedWriter(path);
+        bw.write(hostNode.getNodeName() + LINEFEEDCODE);
+        for (Node childNode : hostNode.getChildrenNode()) {
+            bw.write("|-" + childNode.getNodeName() + LINEFEEDCODE);
+            recurChildNodeWriteFile(childNode, 1, bw);
         }
+
+        System.out.println("--------------- 書き込み完了 ---------------");
+        System.out.println("ファイル名 : " + filePath);
+        System.out.println("-------------------------------------------");
+
     }
 
     public void recurChildNodeWriteFile(Node parentNode, int count, BufferedWriter bw) throws IOException{

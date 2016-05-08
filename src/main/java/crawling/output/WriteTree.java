@@ -2,6 +2,7 @@ package crawling.output;
 
 import crawling.nodes.Node;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -9,7 +10,7 @@ import java.util.List;
  */
 public class WriteTree {
 
-    public static void writeTree(List<Node> nodeList, OutputFormat format, String filename){
+    public static void writeTree(List<Node> nodeList, OutputFormat format, String filename) throws IOException{
         WriteTreeFormat wFormat = null;
         switch (format){
             case CONSOLE:

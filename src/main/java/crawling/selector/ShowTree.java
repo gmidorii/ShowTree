@@ -1,6 +1,7 @@
 package crawling.selector;
 
 import crawling.Main;
+import crawling.exception.FromBeginningException;
 import crawling.file.InputFile;
 import crawling.input.MakeUrlSet;
 import crawling.input.URLManager;
@@ -28,7 +29,7 @@ import static crawling.output.OutputFormat.TXT;
  */
 public class ShowTree extends Selector {
     @Override
-    public void select() throws IOException{
+    public void select() throws IOException, FromBeginningException{
         Main.newLine();
         File dir = new File("data/urlset");
         File files[] = dir.listFiles();
@@ -48,6 +49,10 @@ public class ShowTree extends Selector {
             System.out.print(">");
 
             in = br.readLine();
+
+            if(in.equals("back")){
+                throw new FromBeginningException();
+            }
 
             if(Pattern.matches(regexFile, in)) {
                 break;
@@ -93,6 +98,10 @@ public class ShowTree extends Selector {
 
             if(in == null){
                 continue;
+            }
+
+            if(in.equals("back")){
+                throw new FromBeginningException();
             }
 
             if(Pattern.matches(regexOut, in)){

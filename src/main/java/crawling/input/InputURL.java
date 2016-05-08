@@ -1,6 +1,7 @@
 package crawling.input;
 
 import crawling.Main;
+import crawling.exception.FromBeginningException;
 
 import javax.net.ssl.HttpsURLConnection;
 import java.io.BufferedReader;
@@ -14,7 +15,7 @@ import java.net.URL;
  * Created by midori on 2016/04/29.
  */
 public class InputURL {
-    public String inputURL() throws IOException{
+    public String inputURL() throws IOException, FromBeginningException{
         StringBuilder url = null;
         int URLMAXLENGTH  = 200;
         URLManager urlManager;
@@ -30,6 +31,10 @@ public class InputURL {
                 url = new StringBuilder(br.readLine().trim());
                 if (url == null || url.length() == 0 || url.length() > URLMAXLENGTH) {
                     throw new IOException();
+                }
+
+                if(url.toString().equals("back")){
+                    throw new FromBeginningException();
                 }
 
                 if(isExistURL(url.toString())){

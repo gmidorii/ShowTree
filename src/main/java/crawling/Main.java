@@ -1,5 +1,6 @@
 package crawling;
 
+import crawling.exception.FromBeginningException;
 import crawling.selector.CrawlUrl;
 import crawling.selector.Selector;
 import crawling.selector.ShowTree;
@@ -31,7 +32,10 @@ public class Main {
                     newLine();
                     System.out.println("1.URLリストを取得");
                     System.out.println("2.パスツリーを取得");
-                    System.out.println("(終了の場合は、「exit」を入力)");
+                    newLine();
+                    System.out.println("特殊コマンド");
+                    System.out.println("・システム終了   : exit");
+                    System.out.println("・初めから行う   : back");
                     newLine();
                     System.out.println("1 or 2 or exit を入力");
                     System.out.print(">");
@@ -62,6 +66,8 @@ public class Main {
                     System.out.println("エラーが発生しました");
                     System.out.println("初めから行います");
                     newLine();
+                }catch (FromBeginningException e){
+                    System.out.print(e.getMessage());
                 }
 
             }
@@ -85,4 +91,5 @@ public class Main {
     public static void newLine(){
         System.out.print(ctrl);
     }
+
 }
