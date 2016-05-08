@@ -32,6 +32,7 @@ public class WriteTreeFormatTxt implements WriteTreeFormat {
             bw.write("|-" + childNode.getNodeName() + LINEFEEDCODE);
             recurChildNodeWriteFile(childNode, 1, bw);
         }
+        bw.flush();
 
         System.out.println("--------------- 書き込み完了 ---------------");
         System.out.println("ファイル名 : " + filePath);

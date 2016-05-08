@@ -27,6 +27,7 @@ public class WriteFile {
                     bw.write(URLDecoder.decode(inUrl, StandardCharsets.UTF_8.name()));
                     bw.write(Main.ctrl);
                 }
+                bw.flush();
 
                 Main.newLine();
                 System.out.println("------ 書き込み完了 ------");
