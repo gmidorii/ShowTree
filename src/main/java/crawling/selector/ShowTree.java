@@ -38,7 +38,6 @@ public class ShowTree extends Selector {
 
         // File input
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        String regexFile = "[0-" + (files.length - 1) + "]";
         while (true){
             System.out.println("■ 取得したいファイルを選択してください");
             for (int i = 0; i < files.length; i++) {
@@ -54,8 +53,10 @@ public class ShowTree extends Selector {
                 throw new FromBeginningException();
             }
 
-            if(Pattern.matches(regexFile, in)) {
-                break;
+            if(Pattern.matches("[0-9]*", in)){
+                if(Integer.parseInt(in) >= 0 && Integer.parseInt(in) < files.length){
+                    break;
+                }
             }
 
             Main.newLine();

@@ -100,7 +100,7 @@ public class MainTest {
         urlSet.add("gg/tt/ybojgabg");
 
         WriteFile wf = new WriteFile();
-        wf.writeUrlSetFile(urlSet, "blank", "blank.com");
+        wf.writeUrlSetFile(urlSet, "blank", "http://blank.com");
 
         InputFile in = new InputFile();
         List<String> urlList = new ArrayList<>();

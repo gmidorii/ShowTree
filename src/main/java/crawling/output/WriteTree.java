@@ -1,5 +1,6 @@
 package crawling.output;
 
+import crawling.Main;
 import crawling.nodes.Node;
 
 import java.io.IOException;
@@ -20,7 +21,10 @@ public class WriteTree {
                 wFormat = new WriteTreeFormatTxt(nodeList, "data/txt/" + filename + ".txt");
                 break;
             case CSV:
-                break;
+                Main.newLine();
+                System.out.println("ごめんなさい");
+                System.out.println("まだ、CSV出力は実装されていません");
+                return;
         }
 
         wFormat.writeNode();
