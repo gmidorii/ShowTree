@@ -70,6 +70,12 @@ public class Main {
                     System.out.print(e.getMessage());
                 }
 
+                try {
+                    for(int i = 0; i < 5; i++){
+                        System.out.print(".");
+                        Thread.sleep(1000);
+                    }
+                }catch (InterruptedException e){}
             }
         } catch (IOException e) {
             System.out.println("エラーが発生しました");
