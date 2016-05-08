@@ -3,6 +3,7 @@ package crawling.selector;
 import crawling.Main;
 import crawling.file.InputFile;
 import crawling.input.MakeUrlSet;
+import crawling.input.URLManager;
 import crawling.nodes.Node;
 import crawling.nodes.NodeFormatter;
 import crawling.nodes.NodeList;
@@ -65,19 +66,11 @@ public class ShowTree extends Selector {
         List<String> urlList = new ArrayList<>();
         inFile.inputFile(filepath, urlList);
 
-        URL url = null;
-        try {
-            url = new URL(urlList.get(0));
-        }catch (MalformedURLException e){
-            System.out.println("url error");
-            return;
-        }
-
-        String host = url.getHost();
+        URLManager urlManager = new URLManager(urlList.get(0));
         urlList.remove(0);
 
         // nodelist 作成
-        NodeList nodeList = NodeList.generateNodeList(host);
+        NodeList nodeList = NodeList.generateNodeList(urlManager.getHost());
         Node hostNode = nodeList.getHost();
         NodeFormatter nodeFormat = new NodeFormatter(hostNode);
         nodeFormat.addUrlNodeList(urlList);
@@ -109,7 +102,7 @@ public class ShowTree extends Selector {
             }
         }
 
-        WriteTree.writeTree(nodeList.getNodeList(), outputFormat, host);
+        WriteTree.writeTree(nodeList.getNodeList(), outputFormat, urlManager.getHost());
 
     }
 }
