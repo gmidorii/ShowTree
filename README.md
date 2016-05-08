@@ -1,5 +1,6 @@
-# CrawlTree
+# ShowTree
 
-Main Classのmain method内の、urlのパスツリーを生成。  
-パスを潜る回数は以下で指定  
-MakeUrlSet.getUrlSet(url, 回数)  
+機能は2つ    
+
+1.クローリングによりURLを大量取得  
+2.取得したURLを所定の形式にて取得  
