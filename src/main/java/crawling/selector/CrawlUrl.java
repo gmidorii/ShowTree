@@ -30,6 +30,7 @@ public class CrawlUrl extends Selector{
         System.out.println("1 ~ " + MAXHIERARCHY +" を入力");
         System.out.print(">");
 
+        // 階層取得
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         while(true){
             line = br.readLine();
@@ -54,11 +55,15 @@ public class CrawlUrl extends Selector{
             break;
         }
 
+        // URL取得
         InputURL input = new InputURL();
         URLManager urlManager = new URLManager(input.inputURL());
+
+        // Crawling
         Crawl crawl = new Crawl(urlManager);
         Set<String> urlSet = crawl.getUrlSet(hierarchy);
 
+        // File書き出し
         WriteFile write = new WriteFile();
         write.writeUrlSetFile(urlSet, urlManager.getHost(), urlManager.getUrl());
 

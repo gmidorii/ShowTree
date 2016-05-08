@@ -58,24 +58,23 @@ public class ShowTree extends Selector {
             Main.newLine();
         }
 
+        // urlList取得
         fileNum = Integer.parseInt(in);
-
-
         String filepath = files[fileNum].toString();
         InputFile inFile = new InputFile();
         List<String> urlList = new ArrayList<>();
         inFile.inputFile(filepath, urlList);
 
+        // ファイルの1行目はhostURL
         URLManager urlManager = new URLManager(urlList.get(0));
         urlList.remove(0);
 
         // nodelist 作成
         NodeList nodeList = NodeList.generateNodeList(urlManager.getHost());
-        Node hostNode = nodeList.getHost();
-        NodeFormatter nodeFormat = new NodeFormatter(hostNode);
+        NodeFormatter nodeFormat = new NodeFormatter(nodeList.getHost());
         nodeFormat.addUrlNodeList(urlList);
 
-
+        // 出力
         OutputFormat outputFormat;
         while(true){
             String regexOut = "[0-" + OutputFormat.values().length + "]";
