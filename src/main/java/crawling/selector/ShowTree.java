@@ -3,9 +3,7 @@ package crawling.selector;
 import crawling.Main;
 import crawling.exception.FromBeginningException;
 import crawling.file.InputFile;
-import crawling.input.MakeUrlSet;
 import crawling.input.URLManager;
-import crawling.nodes.Node;
 import crawling.nodes.NodeFormatter;
 import crawling.nodes.NodeList;
 import crawling.output.OutputFormat;
@@ -15,14 +13,9 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
-
-import static crawling.output.OutputFormat.CONSOLE;
-import static crawling.output.OutputFormat.TXT;
 
 /**
  * Created by midori on 2016/05/05.
