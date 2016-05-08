@@ -20,6 +20,10 @@ public class InputFile{
                 if(line == null){
                     break;
                 }
+
+                if(line.equals("")){
+                    continue;
+                }
                 col.add(line);
             }
         }catch (IOException e){

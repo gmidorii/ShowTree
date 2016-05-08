@@ -65,7 +65,7 @@ public class CrawlUrl extends Selector{
 
         // File書き出し
         WriteFile write = new WriteFile();
-        write.writeUrlSetFile(urlSet, urlManager.getHost(), urlManager.getUrl());
+        write.writeUrlSetFile(urlSet, "URLSet_" + urlManager.getHost(), urlManager.getUrl());
 
         return;
 
